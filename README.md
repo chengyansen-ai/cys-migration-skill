@@ -12,7 +12,7 @@
 
 <p align="center">
   <b>一套通用、可移植的 AI 人像摄影提示词方法论</b><br>
-  适配 <b>扣子 / Dify / Claude / Codex / ComfyUI / GPT Image 2</b> 等任意支持提示词的智能体与绘画模型
+  适配 <b>Coze / Dify / Claude / Codex / ComfyUI / GPT Image 2</b> 等任意支持提示词的智能体与绘画模型
 </p>
 
 <p align="center">
@@ -69,7 +69,7 @@
 | **负向词库 + 平台写法** | 覆盖 ComfyUI / GPT Image 2 / Midjourney / DALL·E 的写法差异与反 AI 痕迹负向词 |
 | **CLIP 选型指南** | Qwen3-8B CLIP（中文最优）、LongCLIP 破 77 token 截断，含速查表 |
 | **全球知识加固** | 4 大公式共识 + 跨文化美学签名 + 平台特性速查 |
-| **跨平台通用** | 同一套方法论，扣子 / Dify / Claude / Codex / ComfyUI / GPT Image 2 等均可加载使用 |
+| **跨平台通用** | 同一套方法论，Coze / Dify / Claude / Codex / ComfyUI / GPT Image 2 等均可加载使用 |
 
 ---
 
@@ -109,11 +109,11 @@ cys-migration-skill/
 
 本技能是 **Anthropic Agent Skills 开放格式**（`SKILL.md` + `references/`），可被任意兼容客户端加载。以下列出主流平台的正确接入方式。
 
-### 方式一：扣子（Coze）编程【已核实】
+### 方式一：Coze 编程
 
-> 扣子创建技能支持三种方式：输入需求创建 / GitHub 链接创建 / **上传打包好的 Skill**。入口在「扣子编程」开发平台（注意 `coze.cn/skills` 是技能**商店浏览页**，无上传按钮）。
+> Coze 创建技能支持三种方式：输入需求创建 / GitHub 链接创建 / **上传打包好的 Skill**。入口在「Coze 编程」开发平台（注意 `coze.cn/skills` 是技能**商店浏览页**，无上传按钮）。
 
-1. 进入 **扣子开发平台**（coze.cn → 右侧「扣子编程」）。
+1. 进入 **Coze 开发平台**（coze.cn → 右侧「Coze 编程」）。
 2. 左侧「技能」→ 右上角「创建技能」→ 选 **「上传打包好的 Skill」**。
 3. 上传本仓库打包的 `.zip`（含 `SKILL.md`），系统自动解析。
 4. 部署后，在对话框输入 `@` 即可调用。
@@ -144,9 +144,9 @@ Codex 内置 Agent Skills 任务扩展机制（与 Claude Code 同款标准化�
 ### 方式五：其他兼容 Agent Skills 的客户端
 
 - **Cursor / Windsurf / Cline / Aider / Continue** 等支持 `SKILL.md` 的客户端，把仓库放入对应 skills 目录即可。
-- **爱马仕等国产智能体平台**：只要支持 `SKILL.md` 导入或提示词模板，均可按 Agent Skills 格式接入。
+- **爱马仕（Hermes）等国产智能体平台**：只要支持 `SKILL.md` 导入或提示词模板，均可按 Agent Skills 格式接入。
 - **通用规则**：任何兼容 **Anthropic Agent Skills 格式**（`SKILL.md` + `references/`）的客户端都能加载本技能。
-- **手动法**：直接打开 `SKILL.md`，按需求套用 9 段式模板，复制提示词粘贴到任意平台（ComfyUI / GPT Image 2 / 任意聊天机器人）。
+- **手动法**：直接打开 `SKILL.md`，按需求套用 9 段式模板，复制提示词粘贴到任意平台做 ComfyUI 运用（GPT Image 2 / 各类对话机器人均可）。
 
 ---
 
