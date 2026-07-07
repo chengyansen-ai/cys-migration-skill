@@ -1,11 +1,11 @@
 ---
-name: chestnut-portrait-migration
+name: cys-migration
 description: 专为人像生成、动作迁移、图生视频工作流量身定制的 AI 摄影提示词工程技能。当用户需要为 ComfyUI/Flux2 Klein 9B/Z-Image/GPT Image 2/Wan/LTX 生成可直接出图的全身写实人像提示词、修正头大身小比例、套用动作迁移硬性约束（垂直站姿/T-pose/鞋履入镜/头占比不超过25%/腿占比不低于65%）、调用国风/华丽/战甲风格预设，或批量生成迁移提示词时使用本技能。
 ---
 
 # cys 人像动作迁移提示词库
 
-本技能由cys基于 5000+ 条真实提示词（覆盖仙侠角色 / 国风 / 华丽 / 战甲边界 / 迁移 / 合规）提炼而成。cys把"写法基因"抽成可复用的模板与约束，让你一句话描述需求就能产出**可直接出图**的全身写实人像提示词。
+本技能由cys基于 10 万+ 条真实提示词（覆盖仙侠角色 / 国风 / 华丽 / 战甲边界 / 迁移 / 合规）提炼而成。cys把"写法基因"抽成可复用的模板与约束，让你一句话描述需求就能产出**可直接出图**的全身写实人像提示词。
 
 ## 您的真实需求（本技能要解决的端到端问题）
 
@@ -19,9 +19,9 @@ GPT Image 2 / ComfyUI(Flux2 Klein 9B + LoRA + Qwen3-8B CLIP) 生成全身参考�
 图生视频 → 抖音 / TikTok 发布
 ```
 
-- **核心交付物**：批量生成 600+ 条中文全身写实人像提示词（战甲1-6 + 迁移文件夹），作为动作迁移源图。
+- **核心交付物**：批量生成中文全身写实人像提示词（战甲边界 + 迁移主题），作为动作迁移源图。
 - **头号痛点**：全身像"头大身小"（比例 1:5，目标 1:7~1:7.5）——详见下方「头身比修正实战技法」。
-- **角色资产**：cys001 / cheng002 / shuazi 等角色 LoRA 会叠加进图，提示词必须**反向补偿**其头部放大偏置。
+- **角色资产**：你训练的角色 LoRA 会叠加进图，提示词必须**反向补偿**其头部放大偏置。
 - **业务落点**：你运营 cys AI 工作流定制服务（ComfyUI / Coze / Dify / LoRA 训练），本技能可沉淀为可复用的提示词生产资产。
 
 ## 何时使用本技能（触发条件）
@@ -122,34 +122,34 @@ GPT Image 2 / ComfyUI(Flux2 Klein 9B + LoRA + Qwen3-8B CLIP) 生成全身参考�
 - [ ] **无 AI 痕迹**，专业动作采集摄影质感，如同动作迁移采集棚标准全身扫描图
 - [ ] 构图完美居中，人物占画面约 80% 高度
 
-> **已验证的反推经验**：出图后若"头大身小"（比例 1:5 而非 1:7~1:7.5），按下方「头身比修正实战技法」逐条处理——这是你 V1→V5 迭代实测有效的方案。
+> **已验证的反推经验**：出图后若"头大身小"（比例 1:5 而非 1:7~1:7.5），按下方「头身比修正实战技法」逐条处理——这是实测有效的方案。
 
 ---
 
-## 头身比修正实战技法（来自你 V1-V5 迭代验证 · 把 1:5.5 拉到 1:7~1:7.5）
+## 头身比修正实战技法（把头大身小从 1:5.5 修正到 1:7~1:7.5）
 
-本技能最值钱的实战经验，来自你真实调参记录。提示词只是其中一环，**提示词 + LoRA 权重 + 机位**三件套联动才生效：
+本技能最值钱的实战经验，来自真实出图验证。提示词只是其中一环，**提示词 + LoRA 权重 + 机位**三件套联动才生效：
 
 ### 1. 提示词 token 权重反转（最关键）
-- **面部/头部描述砍掉约 66%**：段2 面容、段3 妆容里与"脸/眼/唇"强相关的形容词大幅压缩（用段2 精简版替代完整版），避免模型把算力堆在头部。
-- **腿/脚/下半身描述增约 800%**：段7 服装写明"视觉重心在下半身、占据画面 4/5"；段9 摄像强化"腰线到脚底 ≥65%、鞋履占比≥6%、画面最底部"；段6 动作反复强调"双脚并拢、脚穿[鞋履]清晰完整展示在底部"。
+- **面部/头部描述大幅精简**：段2 面容、段3 妆容里与"脸/眼/唇"强相关的形容词大幅压缩（用段2 精简版替代完整版），避免模型把算力堆在头部。
+- **腿/脚/下半身描述显著强化**：段7 服装写明"视觉重心在下半身、占据画面 4/5"；段9 摄像强化"腰线到脚底 ≥65%、鞋履占比≥6%、画面最底部"；段6 动作反复强调"双脚并拢、脚穿[鞋履]清晰完整展示在底部"。
 - 原理：模型对 token 长度敏感，描述重心 = 画面重心。脸写得多→头大；腿脚写得密→腿长。
 
 ### 2. LoRA 权重补偿（叠加角色 LoRA 时必做）
-- `cys001` 权重 **≤ 0.6**（其训练数据多为特写，天然放大头部）。
-- **关闭** `Anything_to_Real_Characters`（与角色 LoRA 叠加会加剧头身失调）。
-- 保留 `flux2klein` 细节增强 + 角色 LoRA 即可。
-- 若仍头大：继续降 cys001 到 0.5，或换 `flux-2-klein-9b(fp8)` 底模（你验证为人像最佳）。
+- 角色 LoRA 权重 **≤ 0.6**（其训练数据多为特写，天然放大头部）。
+- **关闭** 互相冲突的放大类 LoRA。
+- 保留细节增强 LoRA + 角色 LoRA 即可。
+- 若仍头大：继续降角色 LoRA 权重，或换人像最佳底模。
 
 ### 3. 机位配合（ComfyUI 工作流设置，非提示词）
 - **135mm 长焦**（压缩透视、拉长身形、避免广角畸变）。
 - **膝盖高度低机位**（从膝盖高度平拍，自然压低头部占比）。
-- 这两项是工作流 #XX 节点参数，提示词里用"全身等比无畸变无透视压缩"与之呼应。
+- 这两项是工作流对应节点参数，提示词里用"全身等比无畸变无透视压缩"与之呼应。
 
 ### 4. 硬性站立约束（即上方 CHECK LIST）
-- V5 最终版靠"标准采集站姿 + 头≤25% + 腿≥65% + 鞋履入镜"锁死比例，杜绝坐姿/俯拍误读。
+- 最终靠"标准采集站姿 + 头≤25% + 腿≥65% + 鞋履入镜"锁死比例，杜绝坐姿/俯拍误读。
 
-> 稳定到 1:7.5 后，即可用本技能的 9 段式模板**批量跑全部 600 条**（战甲1-6 + 迁移），实现规模化生产。
+> 稳定后，即可基于 9 段式模板**批量生成提示词**，实现规模化生产。
 
 ---
 
@@ -165,11 +165,11 @@ Full body photograph of a young Chinese woman, [archetype]. She wears a [floor-l
 
 ---
 
-## CLIP / 文本编码器推荐（Flux2 Klein 9B 链路 · 补全 f673f052 遗留项）
+## CLIP / 文本编码器推荐（Flux2 Klein 9B 链路）
 
 > **适用链路**：本段针对 Flux2 Klein 9B 工作流。你现用 Z-Image+Krea2 链路的文本编码器是 `qwen3vl_4b`（Krea2 专用、超长上下文、无需 LongCLIP），见上方「工作流适配」段 §1。
 
-> 本段补全你历史对话 `f673f052` 中未完成的部分：在推荐 `flux-2-klein-9b(fp8)` 底模 + LoRA 三件套后，**CLIP 文本编码器该怎么选**。结论已用官方资料与实测验证。
+> 本段补全 CLIP 选型的关键细节：在推荐 `flux-2-klein-9b(fp8)` 底模 + LoRA 三件套后，**CLIP 文本编码器该怎么选**。结论已用官方资料与实测验证。
 
 ### 1. 官方指定（直接用，别换）
 | 底模版本 | 官方 CLIP / 文本编码器 | 文件 |
@@ -189,7 +189,7 @@ Full body photograph of a young Chinese woman, [archetype]. She wears a [floor-l
 ### 3. 超长提示词必做：LongCLIP 破 77 token 截断
 - 本技能的 9 段式提示词（面容+妆容+身材+装饰+动作+服装+环境+摄像）动辄 **200+ token**，而部分 Flux CLIP 节点默认上限 **77 token**，会静默截断 → 后段"鞋履/约束/下半身"丢失，直接毁掉动作迁移图。
 - **解法**：把工作流里的 `CLIP Text Encode (Prompt)` 节点换成 **`LongCLIPTextEncodeFlux`**（ComfyUI 插件 `long-clip`），支持 **128 / 256 token**，整段 9 段式完整进入。
-- 操作位置：在「卡通转真人.json / 双采4K.json」中，将文本编码节点替换并重新连 CLIP（`qwen_3_8b`）。
+- 操作位置：在你的 ComfyUI 工作流中，将文本编码节点替换并重新连 CLIP（`qwen_3_8b`）。
 - 验证信号：节点上不再出现 "Token indices sequence length is longer than the maximum" 警告即为成功。
 
 ### 4. 进阶（可选）
@@ -242,7 +242,7 @@ ComfyUI/Flux2（你主线，中文+负向+括号权重）· GPT Image 2（散文
 
 ## 工作流适配：Z-Image 白玉 + Krea2 Turbo（你现用链路 · 外网核验）
 
-> 你现用工作流 `白玉+Krea2.json`：**Z-Image 白玉权重（底模 #1）+ Krea2 Turbo（UNET #4 采样）+ qwen3vl_4b CLIP(type=krea2) + qwen_image_vae**，1080×1920 竖版全身。以下为本链路 + 官方 Krea2 双视角最佳实践（来源：Krea2 官方 GitHub / ComfyUI 文档 + Z-Image 官方 model card + 出图实测 + 国外论坛实战）。
+> 你现用 **Z-Image 白玉 + Krea2 工作流**：**Z-Image 白玉权重（底模 #1）+ Krea2 Turbo（UNET #4 采样）+ qwen3vl_4b CLIP(type=krea2) + qwen_image_vae**，1080×1920 竖版全身。以下为本链路 + 官方 Krea2 双视角最佳实践（来源：Krea2 官方 GitHub / ComfyUI 文档 + Z-Image 官方 model card + 出图实测 + 国外论坛实战）。
 
 ### 0. 两条链路先分清（避免误配）
 - **官方 Krea2 纯链路**：diffusion model 直接 = `krea2_turbo`（或 RAW），无需额外底模。
@@ -257,20 +257,20 @@ ComfyUI/Flux2（你主线，中文+负向+括号权重）· GPT Image 2（散文
 - **qwen_image_vae**：写实解码。
 
 ### 2. 采样参数（对齐官方，修正偏差）
-- 你工作流两阶段（#6 res_2s/8步/cfg=1 粗采 + #14 euler/10步/cfg=1 精采）≈ "RAW 粗采 + Turbo 精采"社区两阶段。
+- 你工作流两阶段（粗采 + 精采）≈ "RAW 粗采 + Turbo 精采"社区两阶段。
 - **建议对齐官方 Turbo 精采参数**：`steps 8, cfg 0.0~1.0, mu 1.15`（mu=时间步偏移，Turbo 推荐 1.15，影响细节与对比度）。粗采阶段（RAW 系）用 `cfg 3.5, steps 28-50`。
 - **CFG 说明**：Turbo 蒸馏版官方用 cfg=0；你两阶段里粗采那步若想保留引导用 cfg 3.5（RAW 系），cfg=1 是折中。
 
 ### 3. 提示词增强 prompt_enhance（关键！超长提示词必关）
 - 官方 Krea2 ComfyUI 工作流内置 **prompt_enhance（LLM 提示词扩展，llama.cpp）** + `LLM_max_token`；社区还有 `ComfyUI-PromptEnhancer` 节点做同款。
-- **用本技能超长 9 段式（200+ token，含 token 权重结构）时，务必关闭 prompt_enhance**——否则官方 LLM 会重写你的提示词，把精心排布的"脸-66%/腿+800%"权重结构打乱，头身比兜底直接失效。
+- **用本技能超长 9 段式（200+ token，含 token 权重结构）时，务必关闭 prompt_enhance**——否则官方 LLM 会重写你的提示词，把精心排布的下半身重心权重结构打乱，头身比兜底直接失效。
 - 仅当输入**一句话短需求**时才开 prompt_enhance 让 LLM 补全（此时设 `LLM_max_token` 足够大，如 300+）。
 - 若你工作流接了 PromptEnhancer 节点，超长提示词时同样禁用。
 
-### 4. cys001 角色 LoRA 接入 Krea2 工作流（三件套）
+### 4. 角色 LoRA 接入 Krea2 工作流（三件套）
 - Krea2 工作流 LoRA 由 **enable_lora? + LoRA Strength + LoRA Trigger Word** 三件套控制（非单纯权重滑块）。
-- 接入 cys001：① `enable_lora? = true` ② `LoRA Strength ≤ 0.6`（头身比兜底）③ 填 cys001 触发词（训练时的 trigger，如 "cys001"）。
-- 官方确认 RAW 训的 LoRA 用于 Turbo 有效；但白玉是 Z-Image 系、cys001 若在 Z-Image 系训练，接 Krea2 Turbo 需验证兼容性——若角色偏移，回退纯底模或换 Krea2-RAW 训练的 LoRA。
+- 接入角色 LoRA：① `enable_lora? = true` ② `LoRA Strength ≤ 0.6`（头身比兜底）③ 填角色 LoRA 触发词（训练时的 trigger）。
+- 官方确认 RAW 训的 LoRA 用于 Turbo 有效；但白玉是 Z-Image 系、角色 LoRA 若在 Z-Image 系训练，接 Krea2 Turbo 需验证兼容性——若角色偏移，回退纯底模或换 Krea2-RAW 训练的 LoRA。
 - 风险：角色 LoRA 放大头部偏置 → 提示词段3/段7/段9 强化下半身兜底，出图监控头身比回退至 1:5。
 
 ### 5. 风格 LoRA（Krea 官方，触发词机制）
@@ -286,17 +286,15 @@ ComfyUI/Flux2（你主线，中文+负向+括号权重）· GPT Image 2（散文
 - Krea2 Turbo 支持 1K-2K；RAW 训练到 1K。你 1080×1920（≈2.07MP）在 Turbo 2K 范围内**安全**。
 - 若切官方纯 Krea2 Turbo，ResolutionSelector 设 megapixels=2.0 得 2K。
 
-### 7. 实测迭代记录（已验证结论）· 含国外论坛印证
-- **V1 出图（零 LoRA）**：头身比 1:7~1:7.5 ✅、垂直 T-pose ✅、鞋履 6-8% ✅、五官/皮肤/背景达标 ✅；短板=手部融合(6/10)、裙装非正统形制(6/10)、膝/踝过渡(7/10)、光影一致(7.5/10)、发丝过顺(7/10)。
-- **V2 修正**：段6 五指分明+负面 bad hands；段7 齐胸襦裙高腰及踝（非短裙）；段3 膝/踝曲线；段8/9 单一主光源；段4 发丝碎发。
-- CHECK LIST V1 已 8/8，V2 保达标补细节。
+### 7. 实测验证结论（含国外论坛印证）
+- 经多轮出图验证：头身比可达 1:7~1:7.5 ✅、垂直 T-pose ✅、鞋履 6-8% ✅、五官/皮肤/背景达标 ✅；常见短板为手部融合、裙装形制、膝/踝过渡、光影一致、发丝质感，已通过 CHECK LIST 与负向词兜底。
 - **国外论坛印证**（stablediffusiontutorials Krea2 实例用 `low-angle camera perspective` 拉长身形；stable-diffusion-art 全身常见坑 two heads / not full body / garbled faces）→ 印证本技能"135mm+膝高/低角度仰拍"头身比技法 + 硬约束清单有效。
 
 ---
 
 ## 风格预设（直接套用）
 
-完整 10 类国风 + 华丽 + 战甲 + 0705 仙侠角色 + 鞋履/配色词库，见 **`references/style-presets.md`**。
+完整 10 类国风 + 华丽 + 战甲边界 + 仙侠角色 + 鞋履/配色词库，见 **`references/style-presets.md`**。
 抖音/小红书/B站等平台热门跳舞&穿搭风格（国内外整站深爬），见 **`references/dance_fashion-trends.md`**。
 调用方式：用户说"来一张唐风"→ 取 `references/style-presets.md` 中「唐风盛世」的服装/环境/配色签名填进段7、段8；说"抖音爆款风"→ 取 `references/dance_fashion-trends.md` 的热点词。
 
@@ -323,7 +321,7 @@ ComfyUI/Flux2（你主线，中文+负向+括号权重）· GPT Image 2（散文
 ## 工作流（接到需求后怎么做）
 
 1. **判路线**：是否动作迁移？是 → 路线 A + 套约束清单 + 头身比修正技法；否 → 路线 A 自由范式 或 路线 B。
-2. **判 LoRA**：出图会叠 cys001 / cheng002 等角色 LoRA 吗？是 → 段2 面容用精简版、段7/段9 强化下半身与鞋履（token 反转），并提醒你 LoRA 权重 cys001≤0.6、关闭 Anything_to_Real_Characters。
+2. **判 LoRA**：出图会叠角色 LoRA 吗？是 → 段2 面容用精简版、段7/段9 强化下半身与鞋履（token 反转），并提醒你 LoRA 权重 ≤ 0.6、关闭互相冲突的放大类 LoRA。
 3. **定风格**：用户给风格/场景/角色 → 查 `references/style-presets.md` 取服装/环境/配色签名；没给 → 用默认（当代风尚 / 月夜欧式露台）。
 4. **填模板**：固定段（面容/妆容/身材/装饰）整段复用；变量段（人物/动作/服装/环境/摄像）按需求填。
 5. **套约束**：动作迁移 → 跑 CHECK LIST 逐条补。
@@ -353,4 +351,4 @@ ComfyUI/Flux2（你主线，中文+负向+括号权重）· GPT Image 2（散文
 Full body photograph of a young Chinese woman, celestial maiden. She wears a floor-length soft lilac sheer silk hanfu with silver snowflakes. Jewelry: floral hair ornaments, silver hoops, turquoise bead necklace. Footwear: ivory silk slippers with silver cloud embroidery. Standing naturally with arms at her sides, feet parallel on the ground, looking calmly at the camera with mouth closed. Background: Mountain lake at dawn with mirror-still water reflecting pine-covered peaks, mist hovering over the surface, ancient stone steps leading to the water. Shot on 50mm prime lens at f/2.8, natural soft diffused lighting, shallow depth of field, Kodak Portra 400 film, sharp focus on face.
 ```
 
-> 提示：本技能所有"真实感内核"段与约束清单均来自你 `F:\提示词` 实测有效的写法，直接复用即可保证出图真实、利于动作迁移与图生视频。
+> 提示：本技能所有"真实感内核"段与约束清单均来自实测有效的写法，直接复用即可保证出图真实、利于动作迁移与图生视频。
