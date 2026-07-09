@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-4.0.0-blue?style=flat-square" alt="version">
+  <img src="https://img.shields.io/badge/version-1.8.3-blue?style=flat-square" alt="version">
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="license">
   <img src="https://img.shields.io/badge/format-Agent%20Skill-8A2BE2?style=flat-square" alt="format">
   <img src="https://img.shields.io/badge/语言-中文-orange?style=flat-square" alt="language">
@@ -23,7 +23,7 @@
 
 ## 概述
 
-本技能不是理论模板——它是从 **5,000+ 条真实提示词**和 **Krea2 生产环境实测**中提炼的方法论。覆盖全身照/半身照双版本输出、头身比修正、协调批量生成，可直接用于 ComfyUI 运用、视频成片等场景。
+本技能不是理论模板——它是从 **5,000+ 条真实提示词**和 **Krea2 生产环境实测**中提炼的方法论。覆盖全身照/半身照双版本输出、头身比修正、协调批量生成，可直接用于 ComfyUI 应用、视频成片等场景。
 
 > 💡 **核心亮点**：全部参数经 Krea2 两阶段 hires-fix 管线实测验证，头身比从 1:5 修正到 1:7~1:7.5
 
@@ -46,14 +46,14 @@
 **模板引擎**
 
 - **中文 9 段式模板**：人物→面容→妆容→身材→装饰→动作→服装→环境→摄像，前 4 段跨图复用
-- **双版本输出**：全身照（ComfyUI 运用源图）+ 上半身中景照（视频成片参考）
-- **ComfyUI 运用硬约束**：垂直站姿 / T-pose / 鞋履入镜 / 头≤25%·腿≥65%，带 CHECK LIST
+- **双版本输出**：全身照（ComfyUI 应用源图）+ 上半身中景照（视频成片参考）
+- **ComfyUI 应用硬约束**：垂直站姿 / T-pose / 鞋履入镜 / 头≤25%·腿≥65%，带 CHECK LIST
 - **30+ 风格预设**：10 类国风形制 + 20+ 类现代/海外美学
 - **CLIP 速查**：Klein 9B→Qwen3-8B / Krea2→type=krea2 / Flux.1→T5-XXL
 
 **生产实测（最有价值）**
 
-- **Krea2 管线实测**：Node 109 负向词模板（1.5 权重分层）、CFG 黄金法则（粗采 3.0 / 精修 1.0）、LoRA 三件套机制
+- **Krea2 管线实测**：CFG 永久锁定 1.0（无负向提示词）、LoRA 三件套机制、两阶段 hires-fix 管线
 - **头身比修正**：Token 权重反转 + LoRA ≤0.6 + 低角度仰拍，1:5 → 1:7~1:7.5
 - **协调生成 v3**：15 大类 × 专属词库，领×袖冲突检测，抖音合规
 - **批量生成**：千条级已验证：1000 条全唯一、零重复、零违规
@@ -88,7 +88,7 @@
 妆容：[真实感内核：清透底妆 / 淡雅眼妆 / 裸粉唇釉]
 身材：[真实感内核：匀称挺拔 / 曲线自然 / 白皙透粉凝脂肌]
 装饰：[发色 / 珠宝配饰 / 美甲，可按需改]
-动作：[ComfyUI 运用范式：垂直站立 T-pose；或自由范式：重氛围]
+动作：[ComfyUI 应用范式：垂直站立 T-pose；或自由范式：重氛围]
 服装：[视觉重心在下半身，鞋履四要素：跟高+鞋头+材质+细节]
 环境：[具体场景 + 前景画框 + 中景 + 远景 + 光效 + 主色调]
 摄像：[头≤25% / 腿≥65% / 鞋履≥6% / 全身等比无畸变]
@@ -98,7 +98,7 @@
 
 ### 两种构图输出
 
-| 场景 | 全身照（运用源图） | 上半身中景照（视频参考） |
+| 场景 | 全身照（应用源图） | 上半身中景照（视频参考） |
 |---|---|---|
 | 景别 | 全身垂直站立，标准采集站姿 | 上半身中景（腰部以上） |
 | 动作 | 双脚并拢，双手下垂，T-pose | 正面直立，双手自然摆放 |
@@ -107,7 +107,7 @@
 
 ---
 
-## ComfyUI 运用硬性约束
+## ComfyUI 应用硬性约束
 
 生成源图时逐条核对：
 
@@ -130,28 +130,13 @@
 
 | 阶段 | 采样器 | 步数 | CFG | 调度器 | 分辨率 |
 |---|---|---|---|---|---|
-| 粗采 | KSamplerAdvanced | 8 | **3.0** | linear_quadratic | 1080×1920 |
+| 粗采 | KSamplerAdvanced | 8 | **1.0** | linear_quadratic | 1080×1920 |
 | 放大 | ImageUpscaleWithModel | — | — | — | — |
 | 精修 | KSamplerAdvanced | 10 | **1.0** | euler / simple | latent 输入 |
 
-### CFG 黄金法则
-- **粗采 CFG=3.0**：锁定画风，细节最佳
-- **精修 CFG=1.0**：避免过强引导崩坏人脸
-- ⚠ 永不用 CFG=0：粗采阶段需要约束构图
-
-### Node 109 负向词模板
-
-```
-(worst quality:1.5), (low quality:1.5), (bad anatomy:1.3), (bad hands:1.3),
-(extra fingers:1.4), (missing fingers:1.4), (mutated:1.3), (deformed:1.3),
-(ugly:1.3), (bad proportions:1.3), (blurry:1.2), (oversaturated:1.2),
-(photorealistic:1.3), (realistic:1.3), (3d render:1.3), (cgi:1.2),
-(watermark:1.2), (text:1.2), (signature:1.2), (username:1.2)
-```
-
-ComfyUI 运用追加：`cropped feet, shoes missing, (head too big:1.4)`
-
-**权重分层**：质量层 1.5 → 解剖层 1.3-1.4 → 防漂移层 1.3 → 噪声层 1.2
+### CFG 黄金法则 [锁定]
+- **CFG 永久锁定 1.0**（粗采与精修统一）：Turbo 蒸馏版原生支持 CFG=1.0 自由发挥，出图最美最自然；CFG=3.0 会压制创造力→图变平变丑，已弃用。
+- **不使用负向提示词**：头身比/鞋履靠正向段9 约束 + 描述引导兜底，负向留空（CFG=1.0 下负向会打乱权重结构）。
 
 ### LoRA 三件套
 
@@ -215,7 +200,7 @@ ComfyUI 运用追加：`cropped feet, shoes missing, (head too big:1.4)`
 
 ## 使用示例
 
-**示例 A · 中文 9 段式（ComfyUI 运用源图 · 唐风）**
+**示例 A · 中文 9 段式（ComfyUI 应用源图 · 唐风）**
 
 ```
 人物：20岁亚洲年轻女性，全身垂直站立照，牡丹园，标准采集站姿
@@ -223,10 +208,10 @@ ComfyUI 运用追加：`cropped feet, shoes missing, (head too big:1.4)`
 妆容：[真实感内核]
 身材：[真实感内核]
 装饰：[黑长直发，简约银质锁骨链]
-动作：[ComfyUI 运用范式] 脚穿胭脂红云头锦履，平底，鞋面盘金绣
+动作：[ComfyUI 应用范式] 脚穿胭脂红云头锦履，平底，鞋面盘金绣
 服装：齐胸襦裙高腰及踝，胭脂红长裙占画面4/5；月白真丝大袖对襟衫
 环境：大唐盛世牡丹园，汉白玉栏杆蜿蜒，主色牡丹粉+汉白玉白+琉璃金
-摄像：[ComfyUI 运用范式] 全身等比无畸变，头≤25%，腿≥65%
+摄像：[ComfyUI 应用范式] 全身等比无畸变，头≤25%，腿≥65%
 ```
 
 **示例 B · 英文摄影风（GPT Image 2 · 仙门圣女）**
@@ -243,7 +228,7 @@ Standing naturally, feet parallel. Shot on 50mm f/2.8, Kodak Portra 400.
 ```
 服装：哑黑机能风衣敞开，网纱连衣裙垂坠及踝；脚穿厚底机能靴
 环境：雨夜霓虹街区，全息广告浮空
-摄像：[ComfyUI 运用范式] 头≤25%，腿≥65%，鞋履≥6%
+摄像：[ComfyUI 应用范式] 头≤25%，腿≥65%，鞋履≥6%
 ```
 
 ---
@@ -264,15 +249,27 @@ Standing naturally, feet parallel. Shot on 50mm f/2.8, Kodak Portra 400.
 
 ```
 cys-migration-skill/
-├── SKILL.md                      # 技能主体
+├── SKILL.md                      # 技能主体（中文9段式 / 动作迁移约束 / 合规边界）
 ├── README.md                     # 本文件
 ├── LICENSE                       # MIT © 2026 cys
-└── references/
-    ├── style-presets.md          # 30+ 风格签名 / 鞋履配色 / 服装词库
-    ├── global-knowledge.md       # 22 篇指南：负向词库 / 文化增强 / 多平台写法
-    ├── dance_fashion-trends.md   # 4,141+ 条平台热点
-    ├── global-taxonomy.md        # 15 大类风格专属词库
-    └── coordinated-generation.md # v3 协调生成方法论
+├── banned-words.txt              # 抖音违规词精确短语（生成器 BANNED 校验权威源，内联）
+├── 平台合规通用.md               # AI标识/四平台审核/通用软色情红线（与二次元技能共用基线）
+├── motion-migration-constraints.md  # 动作迁移硬约束 CHECK LIST（写实/动漫通用）
+├── references/
+│   ├── style-presets.md          # 30+ 风格签名 / 鞋履配色 / 服装词库
+│   ├── style-presets.md.annotated # 风格预设带注释解读版
+│   ├── global-knowledge.md       # 22 篇指南：公式共识 / 文化增强 / 多平台写法
+│   ├── dance_fashion-trends.md   # 4,141+ 条平台热点（舞种+穿搭+鞋履+BGM）
+│   ├── global-taxonomy.md        # 15 大类风格专属词库（防换皮铁律）
+│   ├── coordinated-generation.md # v3 协调生成方法论
+│   ├── real-portrait-corpus.md   # 桌面源文件提炼写实语料库（服装/鞋履/背景/光线）
+│   ├── 真人内容边界.md           # 真人写实专属合规（肖像权/可识别性/深度合成）
+│   └── 亚洲年轻女性穿搭词库.json # 服装色彩结构化词库
+└── scripts/
+    ├── gen_v3.py                 # 全身照（动作迁移源图）批量生成器
+    ├── gen_v4_halfbody.py        # 上半身中景照批量生成器
+    ├── extract_corpus.py         # 从源文件提炼语料库脚本
+    └── selftest.py               # 自测：生成+合规校验
 ```
 
 ---
