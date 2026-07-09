@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="540" viewBox="0 0 1120 540" font-family="'PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+  <defs>
+    <linearGradient id="bg9" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f1226"/>
+      <stop offset="1" stop-color="#1a1438"/>
+    </linearGradient>
+    <linearGradient id="reuse" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#7c5cff"/>
+    </linearGradient>
+    <linearGradient id="norm" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#475569"/>
+      <stop offset="1" stop-color="#64748b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1120" height="540" fill="url(#bg9)" rx="18"/>
+  <text x="44" y="50" fill="#ffffff" font-size="26" font-weight="800">9 段式模板结构</text>
+  <text x="44" y="78" fill="#94a3b8" font-size="15">前 4 段（人物·面容·妆容·身材）固定真实感内核，跨图复用 ｜ 后 5 段按场景灵活变化</text>
+
+  <!-- 卡片：x = 44 + col*352 , y = 110 + row*146 -->
+  <!-- row0 -->
+  <g>
+    <rect x="44" y="110" width="320" height="122" rx="14" fill="#16203f" stroke="url(#reuse)" stroke-width="2"/>
+    <text x="64" y="142" fill="#22d3ee" font-size="13" font-weight="700" letter-spacing="2">01 · REUSE</text>
+    <text x="64" y="172" fill="#ffffff" font-size="21" font-weight="800">人物</text>
+    <text x="64" y="198" fill="#cbd5e1" font-size="13">人设 · 景别 · 站姿</text>
+    <text x="64" y="220" fill="#7fe7f5" font-size="12">20岁亚洲女性 · 全身垂直</text>
+  </g>
+  <g>
+    <rect x="396" y="110" width="320" height="122" rx="14" fill="#16203f" stroke="url(#reuse)" stroke-width="2"/>
+    <text x="416" y="142" fill="#22d3ee" font-size="13" font-weight="700" letter-spacing="2">02 · REUSE</text>
+    <text x="416" y="172" fill="#ffffff" font-size="21" font-weight="800">面容</text>
+    <text x="416" y="198" fill="#cbd5e1" font-size="13">真实感内核</text>
+    <text x="416" y="220" fill="#7fe7f5" font-size="12">东方精致五官 · 水光肌 · 圆眼</text>
+  </g>
+  <g>
+    <rect x="748" y="110" width="320" height="122" rx="14" fill="#16203f" stroke="url(#reuse)" stroke-width="2"/>
+    <text x="768" y="142" fill="#22d3ee" font-size="13" font-weight="700" letter-spacing="2">03 · REUSE</text>
+    <text x="768" y="172" fill="#ffffff" font-size="21" font-weight="800">妆容</text>
+    <text x="768" y="198" fill="#cbd5e1" font-size="13">真实感内核</text>
+    <text x="768" y="220" fill="#7fe7f5" font-size="12">清透底妆 · 裸粉唇釉</text>
+  </g>
+  <!-- row1 -->
+  <g>
+    <rect x="44" y="256" width="320" height="122" rx="14" fill="#16203f" stroke="url(#reuse)" stroke-width="2"/>
+    <text x="64" y="288" fill="#22d3ee" font-size="13" font-weight="700" letter-spacing="2">04 · REUSE</text>
+    <text x="64" y="318" fill="#ffffff" font-size="21" font-weight="800">身材</text>
+    <text x="64" y="344" fill="#cbd5e1" font-size="13">真实感内核</text>
+    <text x="64" y="366" fill="#7fe7f5" font-size="12">匀称挺拔 · 透粉凝脂肌</text>
+  </g>
+  <g>
+    <rect x="396" y="256" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
+    <text x="416" y="288" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">05</text>
+    <text x="416" y="318" fill="#ffffff" font-size="21" font-weight="800">装饰</text>
+    <text x="416" y="344" fill="#cbd5e1" font-size="13">发色 · 珠宝 · 美甲</text>
+    <text x="416" y="366" fill="#cbd5e1" font-size="12">黑长直 · 锁骨链 · 法式甲</text>
+  </g>
+  <g>
+    <rect x="748" y="256" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
+    <text x="768" y="288" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">06</text>
+    <text x="768" y="318" fill="#ffffff" font-size="21" font-weight="800">动作</text>
+    <text x="768" y="344" fill="#cbd5e1" font-size="13">应用硬约束</text>
+    <text x="768" y="366" fill="#cbd5e1" font-size="12">垂直站立 · T-pose · 鞋履入镜</text>
+  </g>
+  <!-- row2 -->
+  <g>
+    <rect x="44" y="402" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
+    <text x="64" y="434" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">07</text>
+    <text x="64" y="464" fill="#ffffff" font-size="21" font-weight="800">服装</text>
+    <text x="64" y="490" fill="#cbd5e1" font-size="13">视觉重心在下半身</text>
+    <text x="64" y="512" fill="#cbd5e1" font-size="12">鞋履四要素：跟高+鞋头+材质+细节</text>
+  </g>
+  <g>
+    <rect x="396" y="402" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
+    <text x="416" y="434" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">08</text>
+    <text x="416" y="464" fill="#ffffff" font-size="21" font-weight="800">环境</text>
+    <text x="416" y="490" fill="#cbd5e1" font-size="13">场景 + 前景 + 光效</text>
+    <text x="416" y="512" fill="#cbd5e1" font-size="12">具体场景 · 画框 · 主色调</text>
+  </g>
+  <g>
+    <rect x="748" y="402" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
+    <text x="768" y="434" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">09</text>
+    <text x="768" y="464" fill="#ffffff" font-size="21" font-weight="800">摄像</text>
+    <text x="768" y="490" fill="#cbd5e1" font-size="13">比例硬约束</text>
+    <text x="768" y="512" fill="#cbd5e1" font-size="12">头≤25% · 腿≥65% · 鞋履≥6%</text>
+  </g>
+</svg>

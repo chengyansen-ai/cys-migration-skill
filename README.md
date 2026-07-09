@@ -1,86 +1,116 @@
 <p align="center">
+  <a href="https://github.com/chengyansen-ai/cys-migration-skill">
+    <img src="assets/banner.svg" alt="cys 写实人像提示词工程" width="100%">
+  </a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/version-1.8.3-blue?style=flat-square" alt="version">
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="license">
   <img src="https://img.shields.io/badge/format-Agent%20Skill-8A2BE2?style=flat-square" alt="format">
   <img src="https://img.shields.io/badge/语言-中文-orange?style=flat-square" alt="language">
   <img src="https://img.shields.io/badge/风格预设-30%2B-brightgreen?style=flat-square" alt="styles">
   <img src="https://img.shields.io/badge/Krea2-实测验证-ff69b4?style=flat-square" alt="krea2">
+  <img src="https://img.shields.io/github/stars/chengyansen-ai/cys-migration-skill?style=flat-square&color=yellow" alt="stars">
+  <img src="https://img.shields.io/github/last-commit/chengyansen-ai/cys-migration-skill?style=flat-square" alt="last-commit">
 </p>
 
-<h1 align="center">cys 全能 AI 人像提示词工程技能库</h1>
+<h1 align="center">写实人像提示词工程 · cys-migration</h1>
 
 <p align="center">
   <b>9 段式模板 · Krea2 生产级实测 · 跨平台通用</b><br>
-  一套从真实出图中淬炼的人像提示词方法论<br>
+  一套从 <b>5,000+ 条真实出图</b> 中淬炼的人像提示词方法论<br>
   适配 Coze / Dify / Claude / Codex / ComfyUI / Krea2 / GPT Image 2
 </p>
 
 <p align="center">
-  作者 <b>cys</b> · 核心理念：真实感第一，量产先行，数据驱动
+  <sub>作者 <b>cys</b> · 核心理念：真实感第一，量产先行，数据驱动</sub>
 </p>
 
 ---
 
-## 概述
+## 📑 目录
 
-本技能不是理论模板——它是从 **5,000+ 条真实提示词**和 **Krea2 生产环境实测**中提炼的方法论。覆盖全身照/半身照双版本输出、头身比修正、协调批量生成，可直接用于 ComfyUI 应用、视频成片等场景。
-
-> 💡 **核心亮点**：全部参数经 Krea2 两阶段 hires-fix 管线实测验证，头身比从 1:5 修正到 1:7~1:7.5
-
-### 数据基础
-
-| 来源 | 规模 |
-|---|---|
-| 自有提示词库 | 5,000+ 条（国风/仙侠/战甲/迁移/鞋履） |
-| 全球权威指南 | 22 篇（跨欧美/中东/日韩/拉美/国内） |
-| 平台热点样本 | 4,141+ 条（抖音/TikTok/小红书/B站/IG/YT） |
-| 模板合集 | 80+ 份，精读 16 份高相关 |
-| 公式体系 | 4 大体系交叉验证（artprompthq / sureprompts / CRAFT / 中文） |
-| 学术方法 | ACM IMX'23 文化提示词增强 |
-| ⚡ 生产实测 | Krea2 两阶段 hires-fix 管线验证 |
-
----
-
-## 核心能力
-
-**模板引擎**
-
-- **中文 9 段式模板**：人物→面容→妆容→身材→装饰→动作→服装→环境→摄像，前 4 段跨图复用
-- **双版本输出**：全身照（ComfyUI 应用源图）+ 上半身中景照（视频成片参考）
-- **ComfyUI 应用硬约束**：垂直站姿 / T-pose / 鞋履入镜 / 头≤25%·腿≥65%，带 CHECK LIST
-- **30+ 风格预设**：10 类国风形制 + 20+ 类现代/海外美学
-- **CLIP 速查**：Klein 9B→Qwen3-8B / Krea2→type=krea2 / Flux.1→T5-XXL
-
-**生产实测（最有价值）**
-
-- **Krea2 管线实测**：CFG 永久锁定 1.0（无负向提示词）、LoRA 三件套机制、两阶段 hires-fix 管线
-- **头身比修正**：Token 权重反转 + LoRA ≤0.6 + 低角度仰拍，1:5 → 1:7~1:7.5
-- **协调生成 v3**：15 大类 × 专属词库，领×袖冲突检测，抖音合规
-- **批量生成**：千条级已验证：1000 条全唯一、零重复、零违规
-
-**跨平台**
-
-- **安装**：Coze / Dify / Claude Code / Codex CLI / Cursor / Windsurf / Cline / Aider / Continue / 爱马仕
-- **知识**：22 篇指南 + 跨文化美学 + 4 大公式共识 + ACM 文化增强
+- [为什么需要](#为什么需要)
+- [✨ 核心亮点](#核心亮点)
+- [🚀 快速开始](#快速开始)
+- [🧩 9 段式模板](#9-段式模板)
+- [📐 两种构图输出](#两种构图输出)
+- [🎯 ComfyUI 应用硬约束](#comfyui-应用硬约束)
+- [⚙️ Krea2 生产参数实测](#krea2-生产参数实测)
+- [📏 头身比修正技法](#头身比修正技法)
+- [🔤 CLIP 速查](#clip-速查)
+- [🎨 风格预设 30+](#风格预设-30)
+- [💡 使用示例](#使用示例)
+- [🏭 批量生产能力](#批量生产能力)
+- [📂 仓库结构](#仓库结构)
+- [🗺️ 路线图](#路线图)
+- [🤝 贡献](#贡献)
+- [📄 许可证](#许可证)
 
 ---
 
-## 快速安装
+## 为什么需要
 
-本技能采用 **Anthropic Agent Skills 开放格式**，主流平台均可加载：
+写人像提示词，你大概率遇到过这些坑：
+
+> 🤔 **头大身小**：AI 一生成全身就变成 1:5 的「大头娃娃」，怎么调都回不到 1:7。
+> 🤔 **AI 味太重**：皮肤像塑料、光影假、一眼就被识别出是 AI，图生视频直接穿帮。
+> 🤔 **动作迁移翻车**：骨骼识别失败、鞋履不出镜、腿占比不够，源图没法用。
+> 🤔 **批量即翻车**：千条生成要么重复换皮、要么踩平台违规红线被限流。
+
+本技能不堆理论，只给**从真实出图与 Krea2 生产管线里验证过**的解法——模板结构化、参数锁定、合规内建。
+
+---
+
+## ✨ 核心亮点
+
+| 🧩 **9 段式模板** | 🎯 **动作迁移硬约束** | ⚙️ **Krea2 生产实测** |
+| :--- | :--- | :--- |
+| 人物→面容→妆容→身材→装饰→动作→服装→环境→摄像，前 4 段跨图复用 | 垂直站姿 / T-pose / 鞋履入镜 / 头≤25%·腿≥65%，带 CHECK LIST | CFG 永久锁定 1.0（无负向）、LoRA ≤0.6、两阶段 hires-fix 管线 |
+
+| 📏 **头身比修正** | 🏭 **千条级批量** | ✅ **抖音合规校验** |
+| :--- | :--- | :--- |
+| Token 权重反转 + LoRA 降权 + 低角度仰拍，1:5 → 1:7~1:7.5 | 1000 条全唯一、零重复、零冲突 | 精确短语白名单，生成即过审 |
+
+| 🎨 **30+ 风格预设** | 🌐 **跨平台加载** | 📚 **22 篇权威指南** |
+| :--- | :--- | :--- |
+| 10 类国风形制 + 20+ 现代/海外美学 | Coze / Dify / Claude / Codex / Cursor / ComfyUI | 跨文化美学 + 4 大公式共识 + ACM 文化增强 |
+
+---
+
+## 🚀 快速开始
+
+**① 取技能**
+```bash
+git clone https://github.com/chengyansen-ai/cys-migration-skill.git
+```
+
+**② 加载（任选其一）**
 
 | 平台 | 方式 |
-|---|---|
+| --- | --- |
 | Coze 编程 | 上传 `.zip`（含 SKILL.md），系统自动解析 |
 | Dify | 提示词模板法：嵌入 9 段式 + `{{变量}}` 占位 |
 | Claude Code | 放入 `~/.claude/skills/cys-migration-skill/` |
 | Codex CLI | 放入 `~/.codex/skills/cys-migration-skill/` |
-| Cursor / Windsurf / Cline / Aider / Continue | 放入对应 skills 目录 |
 | 手动法 | 直接打开 `SKILL.md` 复制提示词使用 |
+
+**③ 跑生成器（可选）**
+```bash
+cd scripts
+python gen_v3.py 20        # 全身照（动作迁移源图）批量生成 20 条
+python gen_v4_halfbody.py 20  # 上半身中景照 20 条
+python selftest.py         # 自测：生成 + 合规校验
+```
 
 ---
 
-## 9 段式模板速览
+## 🧩 9 段式模板
+
+<p align="center">
+  <img src="assets/9-section.svg" alt="9 段式模板结构" width="92%">
+</p>
 
 ```
 人物：[人设]，[景别]，[场景]，年龄约20岁，[站姿类型]
@@ -96,10 +126,12 @@
 
 > 提示词本体用中文，复杂详细优先，长度无限制。
 
-### 两种构图输出
+---
+
+## 📐 两种构图输出
 
 | 场景 | 全身照（应用源图） | 上半身中景照（视频参考） |
-|---|---|---|
+| --- | --- | --- |
 | 景别 | 全身垂直站立，标准采集站姿 | 上半身中景（腰部以上） |
 | 动作 | 双脚并拢，双手下垂，T-pose | 正面直立，双手自然摆放 |
 | 鞋履 | **必须入镜**，清晰展示在底部 | 不入镜，与下半身协调 |
@@ -107,7 +139,7 @@
 
 ---
 
-## ComfyUI 应用硬性约束
+## 🎯 ComfyUI 应用硬约束
 
 生成源图时逐条核对：
 
@@ -122,14 +154,14 @@
 
 ---
 
-## Krea2 生产参数实测
+## ⚙️ Krea2 生产参数实测
 
 > 来自 `生图-01-批量动漫.json` 工作流，经多轮出图验证，直接复制可用。
 
 ### 两阶段 hires-fix 管线
 
 | 阶段 | 采样器 | 步数 | CFG | 调度器 | 分辨率 |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | 粗采 | KSamplerAdvanced | 8 | **1.0** | linear_quadratic | 1080×1920 |
 | 放大 | ImageUpscaleWithModel | — | — | — | — |
 | 精修 | KSamplerAdvanced | 10 | **1.0** | euler / simple | latent 输入 |
@@ -141,16 +173,16 @@
 ### LoRA 三件套
 
 | 参数 | 建议值 |
-|---|---|
+| --- | --- |
 | enable_lora? | true |
 | LoRA Strength | **≤ 0.6**（角色 LoRA 放大头部偏置） |
 | Trigger Word | 按角色训练时的触发词填写 |
 
-**实测结论**：头身比 1:7~1:7.5 ✅ / 垂直 T-pose ✅ / 鞋履 6-8% ✅ / 五官/皮肤/背景达标 ✅
+**实测结论**：头身比 1:7~1:7.5 ✅ / 垂直 T-pose ✅ / 鞋履 6-8% ✅ / 五官·皮肤·背景达标 ✅
 
 ---
 
-## 头身比修正技法
+## 📏 头身比修正技法
 
 从 1:5 到 1:7~1:7.5，三段联动：
 
@@ -161,10 +193,10 @@
 
 ---
 
-## CLIP 速查
+## 🔤 CLIP 速查
 
 | 底模 | CLIP | 节点 |
-|---|---|---|
+| --- | --- | --- |
 | Klein 9B | qwen_3_8b.safetensors | LongCLIPTextEncodeFlux |
 | Klein 4B | qwen_3_4b.safetensors | LongCLIPTextEncodeFlux |
 | Krea2 | Krea2 专用（type=krea2） | 标准文本编码 |
@@ -173,12 +205,12 @@
 
 ---
 
-## 风格预设（30+ 种）
+## 🎨 风格预设 30+
 
 ### 国风 · 10 类
 
 | 风格 | 关键词 | 配色 |
-|---|---|---|
+| --- | --- | --- |
 | 魏晋风骨 | 黛蓝罗纱交领、竹林晨雾 | 翠竹绿 · 晨雾白 · 光束金 |
 | 唐风盛世 | 齐胸襦裙、云头锦履、牡丹园 | 牡丹粉 · 汉白玉白 · 琉璃金 |
 | 宋制清雅 | 雪白百迭裙、天青褙子 | 天青 · 雪白 · 水绿 |
@@ -198,7 +230,7 @@
 
 ---
 
-## 使用示例
+## 💡 使用示例
 
 **示例 A · 中文 9 段式（ComfyUI 应用源图 · 唐风）**
 
@@ -214,7 +246,9 @@
 摄像：[ComfyUI 应用范式] 全身等比无畸变，头≤25%，腿≥65%
 ```
 
-**示例 B · 英文摄影风（GPT Image 2 · 仙门圣女）**
+**示例 B · 英文摄影风（跨平台 · 适用于 GPT Image 2 / 海外模型）**
+
+> 主用 Krea2 管线见上文 ⚙️ Krea2 生产参数实测；此示例展示跨平台英文写法。
 
 ```
 Full body photograph of a young Chinese woman, celestial maiden.
@@ -233,10 +267,10 @@ Standing naturally, feet parallel. Shot on 50mm f/2.8, Kodak Portra 400.
 
 ---
 
-## 批量生产能力
+## 🏭 批量生产能力
 
 | 能力 | 规格 | 验证结果 |
-|---|---|---|
+| --- | --- | --- |
 | 风格类 × 专属词库 | 15 大类，每类 14 服装 + 5 鞋履 + 8~12 饰品 + 11+ 背景 | 协调度 **100%** |
 | 背景唯一性 | 1,956 种场景×光影组合池，pop() 弹出 | 1000/1000 唯一 |
 | 内部冲突检测 | 领×袖矛盾自动拦截 | 实测 **0 冲突** |
@@ -245,7 +279,7 @@ Standing naturally, feet parallel. Shot on 50mm f/2.8, Kodak Portra 400.
 
 ---
 
-## 仓库结构
+## 📂 仓库结构
 
 ```
 cys-migration-skill/
@@ -255,6 +289,9 @@ cys-migration-skill/
 ├── banned-words.txt              # 抖音违规词精确短语（生成器 BANNED 校验权威源，内联）
 ├── 平台合规通用.md               # AI标识/四平台审核/通用软色情红线（与二次元技能共用基线）
 ├── motion-migration-constraints.md  # 动作迁移硬约束 CHECK LIST（写实/动漫通用）
+├── assets/
+│   ├── banner.svg                # 仓库头图
+│   └── 9-section.svg             # 9 段式结构信息图
 ├── references/
 │   ├── style-presets.md          # 30+ 风格签名 / 鞋履配色 / 服装词库
 │   ├── style-presets.md.annotated # 风格预设带注释解读版
@@ -274,11 +311,36 @@ cys-migration-skill/
 
 ---
 
-## 许可证
+## 🗺️ 路线图
+
+- [ ] 可视化生成器 WebUI（零代码调参出图）
+- [ ] 视频动作迁移联动工作流（提示词→骨架→成片一键链路）
+- [ ] 更多底模 CLIP 适配对照（Wan / LTX / Hunyuan 等）
+- [ ] 风格库社区共建（PR 提交新国风/海外形制）
+
+---
+
+## 🤝 贡献
+
+欢迎一起把这套方法论打磨得更强：
+
+- 🐛 **提 Issue**：发现模板/参数/合规问题，直接开 issue 描述复现步骤
+- 🔧 **发 PR**：风格库补充、生成器优化、跨平台适配都欢迎
+- 📖 **补文档**：`references/` 下任何可复用的实战经验都可提交
+
+提交前请跑一遍 `python scripts/selftest.py` 确保合规校验通过。
+
+---
+
+## 📄 许可证
 
 MIT License © 2026 cys
 
 ---
+
+<p align="center">
+  <sub>⭐ 如果这个技能帮你出到了满意的图，欢迎 Star 支持，也欢迎分享给更多人 🌟</sub>
+</p>
 
 <p align="center">
   <sub>数据驱动 · 实测优先 · 迭代不止</sub>
