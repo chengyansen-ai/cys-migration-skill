@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-cys-migration 技能 v4 —— 1000 套上半身·中景照提示词（按大类协调版）
+写实人像技能 技能 v4 —— 1000 套上半身·中景照提示词（按大类协调版）
 改进点（相对 v3 全身版）：
   · 改为上半身中景构图（取景至腰部以上，85mm 镜头）
   · 去掉"全身直立垂直站姿"、"脚穿鞋靴"、"从头到脚完整取景"等全身词汇
@@ -193,10 +193,10 @@ def conflict_check(nk, sleeve):
     return None
 
 # ========== 抖音违规词（精确短语，避免误伤"裸色/裸粉唇/裸妆"等合法词） ==========
-# 抖音违规词库：读仓库根 banned-words.txt（发布版内联权威源，单一源防漂移）
+# 抖音违规词库：优先读共享权威源 banned-words.txt（与动漫角色技能 共用，单一源防漂移）
 # 读不到时回退内联，保证脚本仍可独立运行
 import sys as _sys, os as _os
-_SHARED_BANNED = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "banned-words.txt")
+_SHARED_BANNED = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "本仓库", "banned-words.txt")
 def _load_banned():
     try:
         with open(_SHARED_BANNED, encoding="utf-8") as _f:
@@ -283,7 +283,7 @@ for i in range(N):
 OUTDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 os.makedirs(OUTDIR, exist_ok=True)
 HEADER = """═════════════════════════════════════════════════════════════
-【cys-migration 技能 v1.6.0】1000 套上半身·中景照提示词（按大类协调版）
+【写实人像技能 技能 v1.6.0】1000 套上半身·中景照提示词（按大类协调版）
 生成日期：2026-07-07
 标准：背景无活物+抖音流量+不呆板 | 上半身中景构图(取景腰部以上，鞋履不入境但协调搭配)
       颜色多样 | 饰品按类专属库 | 靴鞋按类专属库 | 背景按类主题库 | 服装/饰品/背景四类按15大类协调匹配

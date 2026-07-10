@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
 提炼脚本：从桌面两份源文件（写实人像5000条 + COS汇总csv）提炼
-「服装 / 鞋履 / 背景场景 / 光线」词库，写入 references/real-portrait-corpus.md。
+「服装 / 鞋履 / 背景场景 / 光线」词库，写入写实人像技能/references/real-portrait-corpus.md。
 
 处理原则（用户指令）：
 1) 提炼不整包 —— 只抽 服装/鞋履/背景场景/光线 词汇，不整包塞入技能。
 2) 删模板句 —— 删除 CSV 里固定的「冷白皮，精致的纯欲五官」开头 + 「固定摄影尾参」。
-3) 过 BANNED 精确短语校验（读仓库根 banned-words.txt）。
+3) 过 BANNED 精确短语校验（读 banned-words.txt）。
 4) 人工剔除 透视/低胸/挑逗特写 等暴露/暗示条目。
 5) 只保留动作迁移需要的提示词（垂直全身·鞋履入镜）；非动作迁移的判定不需要即不加。
 
-源文件（外部输入，非技能运行时依赖）：
-  C:/Users/MSI/Desktop/肖像（5000条提示词）.txt
-  C:/Users/MSI/Desktop/提示词汇总.csv
+源文件（外部输入，非技能运行时依赖，路径请按需自行替换）：
+  input/写实人像5000条.txt
+  input/提示词汇总.csv
 """
 import os
 import re
@@ -20,16 +20,16 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REF = os.path.join(HERE, "..", "references")
-BANNED_PATH = os.path.join(HERE, "..", "banned-words.txt")
-SRC_TXT = r"C:/Users/MSI/Desktop/肖像（5000条提示词）.txt"
-SRC_CSV = r"C:/Users/MSI/Desktop/提示词汇总.csv"
+SHARED = os.path.join(HERE, "..")  # 共享约束文件（banned-words.txt 等）已内联至本仓库根目录
+SRC_TXT = r"input/写实人像5000条.txt"
+SRC_CSV = r"input/提示词汇总.csv"
 OUT = os.path.join(REF, "real-portrait-corpus.md")
 
-# ---------- 1. BANNED 精确短语（来自内联 banned-words.txt，读不到则回退内联） ----------
+# ---------- 1. BANNED 精确短语（来自 本仓库，读不到则回退内联） ----------
 FALLBACK_BANNED = ["裸露", "裸体", "全裸", "半裸", "走光", "透视", "内裤",
                    "私处", "色情", "性暗示", "情色", "淫秽", "露点"]
 try:
-    with open(BANNED_PATH, encoding="utf-8") as f:
+    with open(os.path.join(SHARED, "banned-words.txt"), encoding="utf-8") as f:
         BANNED = [l.strip() for l in f if l.strip()]
     if not BANNED:
         BANNED = FALLBACK_BANNED
@@ -232,7 +232,7 @@ def main():
     lines.append("# 真人写实人像语料库（real-portrait-corpus）")
     lines.append("")
     lines.append("> 提炼自桌面两份源文件：**肖像（5000条提示词）.txt** + **提示词汇总.csv**（COS 汇总）。")
-    lines.append("> 处理原则：提炼不整包（仅抽 服装/鞋履/背景/光线 词汇）；删除 CSV 固定模板句「冷白皮，精致的纯欲五官」+ 固定摄影尾参；过仓库根 `banned-words.txt` 精确短语 + 人工剔除透视/低胸/挑逗/暗示条目；仅保留动作迁移需要的提示词。")
+    lines.append("> 处理原则：提炼不整包（仅抽 服装/鞋履/背景/光线 词汇）；删除 CSV 固定模板句「冷白皮，精致的纯欲五官」+ 固定摄影尾参；过 `banned-words.txt` 精确短语 + 人工剔除透视/低胸/挑逗/暗示条目；仅保留动作迁移需要的提示词。")
     lines.append("> 本文件相对路径存于技能内，换机/换会话不断链。")
     lines.append("")
     lines.append("## 一、服装词库（上装 / 下装 / 连衣 / 特殊）")

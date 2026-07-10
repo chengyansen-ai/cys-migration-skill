@@ -294,7 +294,6 @@ cys-migration-skill/
 │   └── 9-section.svg             # 9 段式结构信息图
 ├── references/
 │   ├── style-presets.md          # 30+ 风格签名 / 鞋履配色 / 服装词库
-│   ├── style-presets.md.annotated # 风格预设带注释解读版
 │   ├── global-knowledge.md       # 22 篇指南：公式共识 / 文化增强 / 多平台写法
 │   ├── dance_fashion-trends.md   # 4,141+ 条平台热点（舞种+穿搭+鞋履+BGM）
 │   ├── global-taxonomy.md        # 15 大类风格专属词库（防换皮铁律）
@@ -317,6 +316,19 @@ cys-migration-skill/
 - [ ] 视频动作迁移联动工作流（提示词→骨架→成片一键链路）
 - [ ] 更多底模 CLIP 适配对照（Wan / LTX / Hunyuan 等）
 - [ ] 风格库社区共建（PR 提交新国风/海外形制）
+
+---
+
+## 🆕 更新介绍（Changelog）
+
+### v1.8.3（当前版本 · 本次数据全量同步）
+
+- **协调生成词库同步**：`references/coordinated-generation.md`（v3 协调生成方法论）与 `global-taxonomy.md`（15 大类风格专属词库）完整同步，服装 / 饰品 / 鞋履 / 背景按类匹配，协调度 100%。
+- **写实语料库更新**：`references/real-portrait-corpus.md` 从 5,000+ 条真实出图提炼的服装 / 鞋履 / 背景 / 光线词库；`亚洲年轻女性穿搭词库.json` 结构化补充。
+- **头身比修正技法固化**：Token 权重反转 + LoRA≤0.6 + 低角度仰拍三段联动，1:5 → 1:7~1:7.5 写入 SKILL.md 与本 README。
+- **Krea2 生产参数实测锁定**：CFG 永久锁定 1.0（无负向）、两阶段 hires-fix 管线参数经多轮出图验证。
+- **合规依赖内联自包含**：`banned-words.txt` / `motion-migration-constraints.md` / `平台合规通用.md` 内联至仓库，开箱即用，无外部共享目录依赖。
+- **仓库清理**：移除中间标注文件，References 目录仅保留正式发布语料。
 
 ---
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-# cys-migration 技能自测：跑生成器小批量 + BANNED 合规校验，输出 OK/WARN
+# 写实人像技能 技能自测：跑生成器小批量 + BANNED 合规校验，输出 OK/WARN
 # 用法：python scripts/selftest.py
 import os, sys, subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
-# 读内联 BANNED 权威源（仓库根 banned-words.txt）
-_SHARED = os.path.join(os.path.dirname(os.path.dirname(HERE)), "banned-words.txt")
+# 读共享 BANNED 权威源（banned-words.txt）
+_SHARED = os.path.join(os.path.dirname(os.path.dirname(HERE)), "本仓库", "banned-words.txt")
 try:
     BANNED = [l.strip() for l in open(_SHARED, encoding="utf-8") if l.strip()]
 except FileNotFoundError:
@@ -35,5 +35,5 @@ if __name__ == "__main__":
     ok = True
     ok &= run("gen_v3.py", 20)
     ok &= run("gen_v4_halfbody.py", 20)
-    print("\n===== cys-migration selftest:", "OK" if ok else "WARN", "=====")
+    print("\n===== 写实人像技能 selftest:", "OK" if ok else "WARN", "=====")
     sys.exit(0 if ok else 1)
