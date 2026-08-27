@@ -24,8 +24,8 @@
     <rect x="44" y="110" width="320" height="122" rx="14" fill="#16203f" stroke="url(#reuse)" stroke-width="2"/>
     <text x="64" y="142" fill="#22d3ee" font-size="13" font-weight="700" letter-spacing="2">01 · REUSE</text>
     <text x="64" y="172" fill="#ffffff" font-size="21" font-weight="800">人物</text>
-    <text x="64" y="198" fill="#cbd5e1" font-size="13">人设 · 景别 · 站姿</text>
-    <text x="64" y="220" fill="#7fe7f5" font-size="12">20岁亚洲女性 · 全身垂直</text>
+    <text x="64" y="198" fill="#cbd5e1" font-size="13">人设 · 景别 · 构图</text>
+    <text x="64" y="220" fill="#7fe7f5" font-size="12">20岁亚洲女性 · 写实内核</text>
   </g>
   <g>
     <rect x="396" y="110" width="320" height="122" rx="14" fill="#16203f" stroke="url(#reuse)" stroke-width="2"/>
@@ -60,8 +60,8 @@
     <rect x="748" y="256" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
     <text x="768" y="288" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">06</text>
     <text x="768" y="318" fill="#ffffff" font-size="21" font-weight="800">动作</text>
-    <text x="768" y="344" fill="#cbd5e1" font-size="13">应用硬约束</text>
-    <text x="768" y="366" fill="#cbd5e1" font-size="12">垂直站立 · T-pose · 鞋履入镜</text>
+    <text x="768" y="344" fill="#cbd5e1" font-size="13">姿态 · 动作 · 走位</text>
+    <text x="768" y="366" fill="#cbd5e1" font-size="12">自然站姿 · 行走 · 坐姿</text>
   </g>
   <!-- row2 -->
   <g>
@@ -69,7 +69,7 @@
     <text x="64" y="434" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">07</text>
     <text x="64" y="464" fill="#ffffff" font-size="21" font-weight="800">服装</text>
     <text x="64" y="490" fill="#cbd5e1" font-size="13">视觉重心在下半身</text>
-    <text x="64" y="512" fill="#cbd5e1" font-size="12">鞋履四要素：跟高+鞋头+材质+细节</text>
+    <text x="64" y="512" fill="#cbd5e1" font-size="12">鞋履搭配：跟高+鞋头+材质+细节</text>
   </g>
   <g>
     <rect x="396" y="402" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
@@ -82,7 +82,7 @@
     <rect x="748" y="402" width="320" height="122" rx="14" fill="#1a2138" stroke="url(#norm)" stroke-width="1.5"/>
     <text x="768" y="434" fill="#94a3b8" font-size="13" font-weight="700" letter-spacing="2">09</text>
     <text x="768" y="464" fill="#ffffff" font-size="21" font-weight="800">摄像</text>
-    <text x="768" y="490" fill="#cbd5e1" font-size="13">比例硬约束</text>
-    <text x="768" y="512" fill="#cbd5e1" font-size="12">头≤25% · 腿≥65% · 鞋履≥6%</text>
+    <text x="768" y="490" fill="#cbd5e1" font-size="13">景别 · 焦段 · 构图</text>
+    <text x="768" y="512" fill="#cbd5e1" font-size="12">85mm · 浅景深 · 电影感</text>
   </g>
 </svg>

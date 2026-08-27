@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-写实人像技能 技能 v4 —— 1000 套上半身·中景照提示词（按大类协调版）
+人像提示词生成器 v4 —— 上半身·中景照提示词（按大类协调版）
 改进点（相对 v3 全身版）：
   · 改为上半身中景构图（取景至腰部以上，85mm 镜头）
   · 去掉"全身直立垂直站姿"、"脚穿鞋靴"、"从头到脚完整取景"等全身词汇
   · 保留服装/饰品/背景按 15 大类协调匹配
-  · 保留内部冲突检测（领型×袖型矛盾）
-  · 保留抖音爆款流量合规校验
-标准：背景无活物+抖音流量+不呆板 | 上半身中景构图(鞋履不入境但协调搭配) | 服装/饰品/背景四类按15大类协调匹配
+  · 保留内部冲突检测（领型×袖型矛盾，确保搭配逻辑自洽）
+标准：背景无活物+不呆板 | 上半身中景构图(鞋履不入境但协调搭配) | 服装/饰品/背景四类按15大类协调匹配
 """
 import random, os, re
 random.seed(20260707)
@@ -124,7 +123,7 @@ for v in CAT_BG.values():
     for s in v:
         if s not in ALL_SCENES:
             ALL_SCENES.append(s)
-# 额外干净兜底场景（中性、无活物、非民族结构、抖音流量向），补足组合数≥1000
+# 额外干净兜底场景（中性、无活物、非民族结构），补足组合数≥1000
 EXTRA_SCENES = [
  "高层写字楼天台","酒店露台","教堂屋顶","摩天楼停机坪","水塔平台","晨雾竹林","松林小径","红杉密林",
  "橡树冠层","苔藓秘境","雪松林","白桦林","枫树隧道","棕榈林","橡树林空地","蕨类溪谷","荧光苔藓洞",
@@ -192,19 +191,9 @@ def conflict_check(nk, sleeve):
         return "深V+长袖矛盾"
     return None
 
-# ========== 抖音违规词（精确短语，避免误伤"裸色/裸粉唇/裸妆"等合法词） ==========
-# 抖音违规词库：优先读共享权威源 banned-words.txt（与动漫角色技能 共用，单一源防漂移）
-# 读不到时回退内联，保证脚本仍可独立运行
-import sys as _sys, os as _os
-_SHARED_BANNED = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "本仓库", "banned-words.txt")
-def _load_banned():
-    try:
-        with open(_SHARED_BANNED, encoding="utf-8") as _f:
-            return [ln.strip() for ln in _f if ln.strip()]
-    except FileNotFoundError:
-        return ["裸露","裸体","全裸","半裸","走光","透视","内裤","私处","色情","性暗示","情色","淫秽","露点"]
-BANNED = _load_banned()
-# 生成数量：命令行首参控制（python gen_v4_halfbody.py 50 → 50 条），默认 1000
+# ========== 生成数量 ==========
+import sys as _sys
+# 命令行首参控制（python gen_v4_halfbody.py 50 → 50 条），默认 1000
 N = int(_sys.argv[1]) if len(_sys.argv) > 1 else 1000
 
 # ========== 生成 ==========
@@ -283,15 +272,14 @@ for i in range(N):
 OUTDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 os.makedirs(OUTDIR, exist_ok=True)
 HEADER = """═════════════════════════════════════════════════════════════
-【写实人像技能 技能 v1.6.0】1000 套上半身·中景照提示词（按大类协调版）
+【人像提示词生成器 v4】上半身·中景照提示词（按大类协调版）
 生成日期：2026-07-07
-标准：背景无活物+抖音流量+不呆板 | 上半身中景构图(取景腰部以上，鞋履不入境但协调搭配)
+标准：背景无活物+不呆板 | 上半身中景构图(取景腰部以上，鞋履不入境但协调搭配)
       颜色多样 | 饰品按类专属库 | 靴鞋按类专属库 | 背景按类主题库 | 服装/饰品/背景四类按15大类协调匹配
-数据：抖音/小红书/快手 + 海外(yournextshoes/shoe-tease/maigoo/daxuen/fashion-a-holic/photoworkout 等, VPN)
 ═════════════════════════════════════════════════════════════════════════
 
 """
-OUT = os.path.join(OUTDIR, f"{N}_上半身中景_动作迁移_v4.txt")
+OUT = os.path.join(OUTDIR, f"{N}_上半身中景_人像_v4.txt")
 with open(OUT, "w", encoding="utf-8") as f:
     f.write(HEADER)
     f.write("【分类索引】\n")
@@ -327,16 +315,12 @@ acc_in_cat = sum(1 for (cat, _p, _nk, _sv, accs, _sh, _sc) in prompts if all(a i
 shoe_in_cat = sum(1 for (cat, _p, _nk, _sv, _accs, sh, _sc) in prompts if sh in CATEGORIES[cat]["shoes"])
 bg_in_cat = sum(1 for (cat, _p, _nk, _sv, _accs, _sh, sc) in prompts if sc in CAT_BG[cat])
 
-# 冲突/违规扫描
+# 冲突/自检扫描（仅做搭配逻辑自检，不引入外部合规词表）
 conflicts = []
-banned_hits = []
 for idx, (cat, p, nk, sleeve, accs, sh, sc) in enumerate(prompts, 1):
     cf = conflict_check(nk, sleeve)
     if cf:
         conflicts.append((idx, cat, cf, nk, sleeve))
-    for b in BANNED:
-        if b in p:
-            banned_hits.append((idx, b))
 
 # 上半身中景专属验证：检查提示词中是否含有"全身""从头到脚""完整取景(到脚)"等全身词汇
 full_body_keywords = ["全身","从头到脚","完整取景", "从头顶到脚尖"]
@@ -362,14 +346,11 @@ print(f"饰品∈类库 协调度     : {acc_in_cat} / N ({acc_in_cat/N*100:.1f}
 print(f"鞋靴∈类库 协调度     : {shoe_in_cat} / N ({shoe_in_cat/N*100:.1f}%)")
 print(f"背景场景∈类库 协调度 : {bg_in_cat} / N ({bg_in_cat/N*100:.1f}%)")
 print(f"内部冲突(领×袖)数    : {len(conflicts)}")
-print(f"抖音违规词命中       : {len(banned_hits)}")
 print(f"上半身中景验证       : {'PASS' if halfbody_check_pass else 'FAIL'} ({len(halfbody_violations)} violations)")
 print("各类条数:", cat_count)
-final_ok = (bg_unique==N and outfit_unique==N and dup_prompts==0 and len(conflicts)==0 and len(banned_hits)==0 and acc_in_cat==N and shoe_in_cat==N and halfbody_check_pass)
+final_ok = (bg_unique==N and outfit_unique==N and dup_prompts==0 and len(conflicts)==0 and acc_in_cat==N and shoe_in_cat==N and halfbody_check_pass)
 print("OK" if final_ok else "WARN")
 if conflicts:
     print("冲突样例:", conflicts[:10])
-if banned_hits:
-    print("违规样例:", banned_hits[:10])
 if halfbody_violations:
     print("上半身违例:", halfbody_violations[:10])

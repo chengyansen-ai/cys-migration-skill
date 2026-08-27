@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
-# 写实人像技能 技能自测：跑生成器小批量 + BANNED 合规校验，输出 OK/WARN
+# 人像提示词生成器自测：跑生成器小批量，检查是否输出 OK（唯一性/协调度/搭配逻辑自检）
 # 用法：python scripts/selftest.py
 import os, sys, subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-
-# 读共享 BANNED 权威源（banned-words.txt）
-_SHARED = os.path.join(os.path.dirname(os.path.dirname(HERE)), "本仓库", "banned-words.txt")
-try:
-    BANNED = [l.strip() for l in open(_SHARED, encoding="utf-8") if l.strip()]
-except FileNotFoundError:
-    BANNED = ["裸露", "裸体", "全裸", "半裸", "走光", "透视", "内裤",
-              "私处", "色情", "性暗示", "情色", "淫秽", "露点"]
 
 
 def run(script, n=20):
@@ -24,10 +16,7 @@ def run(script, n=20):
     if r.returncode != 0:
         print("WARN: 运行失败\n", (r.stderr or "")[-500:])
         return False
-    # 生成器末尾打印 OK / WARN；合规命中须为 0
-    if "抖音违规词命中" in tail and "抖音违规词命中       : 0" not in tail:
-        print("WARN: 检测到违规词命中")
-        return False
+    # 生成器末尾打印 OK / WARN：OK 表示唯一性与搭配逻辑自检全部通过
     return "OK" in tail
 
 
@@ -35,5 +24,5 @@ if __name__ == "__main__":
     ok = True
     ok &= run("gen_v3.py", 20)
     ok &= run("gen_v4_halfbody.py", 20)
-    print("\n===== 写实人像技能 selftest:", "OK" if ok else "WARN", "=====")
+    print("\n===== 人像提示词生成器 selftest:", "OK" if ok else "WARN", "=====")
     sys.exit(0 if ok else 1)

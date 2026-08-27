@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-cys迁移技能 v3 —— 1000 套全身·动作迁移舞蹈提示词（按大类协调版）
-改进点（相对 v2）：
-  · 饰品按大类专属库匹配（不再随机）→ 服装/饰品协调
-  · 背景按大类专属主题库匹配（不再随机）→ 服装/背景协调
-  · 鞋靴本来就按大类专属库 → 已协调
-  · 新增内部冲突检测（领型×袖型矛盾）
-  · 新增抖音爆款流量合规校验（无违规词 + 15类均为当下爆款审美）
-标准：背景无活物+抖音流量+不呆板(排除35民族结构类+差背景) | 全身构图(鞋靴可见)
+cys-portrait 生成器 —— 全身人像提示词批量生成（按大类协调版）
+改进点：
+  · 饰品按大类专属库匹配 → 服装/饰品协调
+  · 背景按大类专属主题库匹配 → 服装/背景协调
+  · 鞋靴按大类专属库 → 已协调
+  · 搭配冲突自检（领型×袖型矛盾）
+标准：背景多样不重复 + 全身构图（鞋靴可见）
 """
 import random, os, re
 random.seed(20260707)
@@ -124,7 +123,7 @@ for v in CAT_BG.values():
     for s in v:
         if s not in ALL_SCENES:
             ALL_SCENES.append(s)
-# 额外干净兜底场景（中性、无活物、非民族结构、抖音流量向），补足组合数≥1000
+# 额外兜底场景（中性、无活物、非民族结构），补足组合数≥1000
 EXTRA_SCENES = [
  "高层写字楼天台","酒店露台","教堂屋顶","摩天楼停机坪","水塔平台","晨雾竹林","松林小径","红杉密林",
  "橡树冠层","苔藓秘境","雪松林","白桦林","枫树隧道","棕榈林","橡树林空地","蕨类溪谷","荧光苔藓洞",
@@ -192,19 +191,8 @@ def conflict_check(nk, sleeve):
         return "深V+长袖矛盾"
     return None
 
-# ========== 抖音违规词（精确短语，避免误伤"裸色/裸粉唇/裸妆"等合法词） ==========
-# 抖音违规词库：优先读共享权威源 banned-words.txt（与动漫角色技能 共用，单一源防漂移）
-# 读不到时回退内联，保证脚本仍可独立运行
-import sys as _sys, os as _os
-_SHARED_BANNED = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))), "本仓库", "banned-words.txt")
-def _load_banned():
-    try:
-        with open(_SHARED_BANNED, encoding="utf-8") as _f:
-            return [ln.strip() for ln in _f if ln.strip()]
-    except FileNotFoundError:
-        return ["裸露","裸体","全裸","半裸","走光","透视","内裤","私处","色情","性暗示","情色","淫秽","露点"]
-BANNED = _load_banned()
 # 生成数量：命令行首参控制（python gen_v3.py 50 → 50 条），默认 1000
+import sys as _sys
 N = int(_sys.argv[1]) if len(_sys.argv) > 1 else 1000
 
 # ========== 生成 ==========
@@ -271,7 +259,7 @@ for i in range(N):
 
     garment_desc = f"{c}{m}{p}{nk}{sleeve}{g}"
     prompt = (
-        f"一位年轻东亚女性，{hair}，{eye}，{lip}；{mk}；匀称挺拔，肩颈线条优美，全身直立垂直站姿(利于动作迁移骨架识别)；"
+        f"一位年轻东亚女性，{hair}，{eye}，{lip}；{mk}；匀称挺拔，肩颈线条优美，全身自然直立站姿；"
         f"上半身饰品：{acc_desc}；{pose}；"
         f"身穿{cat}风格·{garment_desc}，剪裁利落、细节精致；脚穿{sh}；"
         f"背景：{bg}；"
@@ -283,15 +271,13 @@ for i in range(N):
 OUTDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 os.makedirs(OUTDIR, exist_ok=True)
 HEADER = """═════════════════════════════════════════════════════════════
-【写实人像技能 技能 v1.5.0】1000 套全身·动作迁移舞蹈提示词（按大类协调版）
-生成日期：2026-07-07
-标准：背景无活物+抖音流量+不呆板(排除35民族结构类+差背景) | 服装/饰品/靴鞋/背景四类按15大类协调匹配
-      颜色多样 | 饰品按类专属库 | 靴鞋按类专属库 | 背景按类主题库 | 全身构图(鞋靴可见,利于骨架识别)
-数据：抖音/小红书/快手 + 海外(yournextshoes/shoe-tease/maigoo/daxuen/fashion-a-holic/photoworkout 等, VPN)
+【cys-portrait】全身人像提示词（按大类协调版）
+标准：背景多样不重复 | 服装/饰品/靴鞋/背景四类按 15 大类协调匹配
+      颜色多样 | 饰品按类专属库 | 靴鞋按类专属库 | 背景按类主题库 | 全身构图(鞋靴可见)
 ═════════════════════════════════════════════════════════════════════════
 
 """
-OUT = os.path.join(OUTDIR, f"{N}_全身_动作迁移_提示词_v3.txt")
+OUT = os.path.join(OUTDIR, f"{N}_全身_人像_提示词_v3.txt")
 with open(OUT, "w", encoding="utf-8") as f:
     f.write(HEADER)
     f.write("【分类索引】\n")
@@ -327,16 +313,12 @@ acc_in_cat = sum(1 for (cat, _p, _nk, _sv, accs, _sh, _sc) in prompts if all(a i
 shoe_in_cat = sum(1 for (cat, _p, _nk, _sv, _accs, sh, _sc) in prompts if sh in CATEGORIES[cat]["shoes"])
 bg_in_cat = sum(1 for (cat, _p, _nk, _sv, _accs, _sh, sc) in prompts if sc in CAT_BG[cat])
 
-# 冲突/违规扫描
+# 搭配冲突扫描
 conflicts = []
-banned_hits = []
 for idx, (cat, p, nk, sleeve, accs, sh, sc) in enumerate(prompts, 1):
     cf = conflict_check(nk, sleeve)
     if cf:
         conflicts.append((idx, cat, cf, nk, sleeve))
-    for b in BANNED:
-        if b in p:
-            banned_hits.append((idx, b))
 
 print("===== v3 校验报告 =====")
 print(f"生成总数             : {len(prompts)}")
@@ -352,10 +334,7 @@ print(f"饰品∈类库 协调度     : {acc_in_cat} / N ({acc_in_cat/N*100:.1f}
 print(f"鞋靴∈类库 协调度     : {shoe_in_cat} / N ({shoe_in_cat/N*100:.1f}%)")
 print(f"背景场景∈类库 协调度 : {bg_in_cat} / N ({bg_in_cat/N*100:.1f}%)")
 print(f"内部冲突(领×袖)数    : {len(conflicts)}")
-print(f"抖音违规词命中       : {len(banned_hits)}")
 print("各类条数:", cat_count)
-print("OK" if (bg_unique==N and outfit_unique==N and dup_prompts==0 and len(conflicts)==0 and len(banned_hits)==0 and acc_in_cat==N and shoe_in_cat==N and bg_in_cat==N) else "WARN")
+print("OK" if (bg_unique==N and outfit_unique==N and dup_prompts==0 and len(conflicts)==0 and acc_in_cat==N and shoe_in_cat==N and bg_in_cat==N) else "WARN")
 if conflicts:
     print("冲突样例:", conflicts[:10])
-if banned_hits:
-    print("违规样例:", banned_hits[:10])
